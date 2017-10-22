@@ -22,20 +22,28 @@ for n in range(0, numPaths):
 	paths.append(item)
 #print(paths)
 
-# #For each path, check each pattern for a match.
-# for path in paths:
-# 	matchesList = []
-# 	for pattern in patterns:
-# 		#if the lengths aren't the same, we know it's not a match
-# 		if len(pattern) == len(path):
-# 			patternMatches = True
-# 			#step through the pattern, check that every item matches the corresponding item in the pattern
-# 			#for index in range(0, len(path)):
-# 			#	if not path[index] == pattern[index]:
-# 			#		patternMatches = False
-# 			if patternMatches:
-# 				matchesList.append(pattern)
-# 	print matchesList
+def findBestMatch(matchesList):
+	#first remove matches that have more wildcards than any other.
+	countWildcards = []
+	#Make a list that has the count of asterisks of each match.
+	for pattern in matchesList:
+		count = 0
+		for item in pattern:
+			if item == "*":
+				count = count + 1
+		countWildcards.append(count)
+	#remove matches that have more asterisks than another.
+	mostWildcards = max(countWildcards)
+	minWildcards = min(countWildcards)
+	while len(matchesList) > 1  and mostWildcards not == minWildcards:
+		#delete the item where mostWildcards is found and delete 
+		#he corresponding count in countWildcards.
+
+		#Recalculate mostWildcards and minWildcards.
+
+
+
+	print countWildcards
 
 for path in paths:
 	matchesList = []
@@ -48,10 +56,9 @@ for path in paths:
 						patternMatches = False;
 			if patternMatches:
 				matchesList.append(pattern)
+	findBestMatch(matchesList)
 	if len(matchesList) == 0:
 		matchesList.append("NO MATCH")
 	print matchesList
 
-def findBestMatch(matchesList[]):
-	
 
