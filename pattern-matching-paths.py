@@ -8,7 +8,6 @@ patterns = []
 for n in range(0, numPatterns):
 	patterns.append(f.readline().strip().split(','))
 
-
 #Read paths into the program
 numPaths = int(f.readline())
 paths = []
@@ -21,48 +20,6 @@ for n in range(0, numPaths):
 		item = item[:len(item) - 1]
 	item = item.split('/')
 	paths.append(item)
-
-
-# def breakTies(matchesList):
-# 	if matchesList[0] == "*":
-# 		del matchesList[0]
-# 		breakTies(matchesList)
-# 	else:
-# 		return matchesList[0]
-
-# def breakTies(matchesList, index):
-# 	print 'matchesList is'
-# 	print matchesList
-# 	if matchesList[index] != "*" and breakTies(matchesList[index + 1], index + 1) == "*":
-# 		print 'return is '
-# 		print matchesList[index]
-# 		return matchesList[index]
-# 	else:
-# 		print 'else'
-
-# def breakTies(matchesList, index):
-# 	print 'matchesList is'
-# 	print matchesList
-# 	if matchesList[index][0] != "*" and matchesList[index + 1][0] == "*":
-# 		print 'return is '
-# 		print matchesList[index]
-# 		return matchesList[index]
-# 	else:
-# 		return breakTies(matchesList[index + 1], index + 1)
-
-
-# def breakTies(list):
-# 	if len(list) == 1:
-# 		return list[0]
-# 	else:
-# 		return 
-# def breakTies(matchesList):
-# 	if matchesList[0][0] != "*" and matchesList[1][0] =="*" and len(matchesList) > 1:
-# 		return matchesList[0]
-# 	else:
-# 		del matchesList[0][0]
-# 		breakTies(matchesList)
-
 
 def findBestMatch(matchesList):
 	#first remove matches that have more wildcards than any other.
@@ -84,15 +41,6 @@ def findBestMatch(matchesList):
 	 	#Recalculate mostWildcards and minWildcards.
 	 	mostWildcards = max(countWildcards)
 	 	minWildcards = min(countWildcards)
-	 #So, all matches that still exist have the same number of asterisks
-	 #Now it is time to recursively find out which one has a non-wildcard first,
-	 #starting from the left.
-	# if len(matchesList) > 1:
-	# 	index = 0
-	#  	matchesList = breakTies(matchesList, index)
-	#  	print 'matchesList result is '
-	#  	print matchesList
-
 
 for path in paths:
 	matchesList = []
@@ -108,9 +56,11 @@ for path in paths:
 	if len(matchesList) > 1:
 		findBestMatch(matchesList)
 	if len(matchesList) == 0:
-		matchesList.append("NO MATCH")
-	print matchesList
-
+		matchesList.append(["NO MATCH"])
+	#print matchesList
+	for item in matchesList:
+		item = ','.join(item)
+		print item
 
 
 
