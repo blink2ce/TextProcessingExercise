@@ -1,23 +1,19 @@
 from __future__ import print_function
 import sys
-import collections
-
-inputFile = open(sys.argv[1])
-outputFile = sys.argv[2]
 
 def readIn(delimiter):
-	numPaths = int(inputFile.readline())
-	paths = []
-	for n in range(0, numPaths):
-		item = inputFile.readline().strip()
+	numPhrases = int(sys.stdin.readline())
+	phrases = []
+	for n in range(0, numPhrases):
+		item = sys.stdin.readline().strip()
 		#remove slashes from both ends, if they exist
 		if item[0] == '/':
 			item = item[1:]
 		if item[len(item) - 1] == '/':
 			item = item[:len(item) - 1]
 		item = item.split(delimiter)
-		paths.append(item)
-	return paths
+		phrases.append(item)
+	return phrases
 
 def breakTies(matchesList):
 	matchLength = len(matchesList[0])
@@ -58,12 +54,10 @@ def findBestMatch(matchesList):
 		breakTies(matchesList)
 
 def printResult(result):
-	with open(outputFile, 'w') as f:
-		for matchesList in result:
-			for match in matchesList:
-				match = ','.join(match)
-				f.write(match + '\n')
-				print(match)
+	for matchesList in result:
+		for match in matchesList:
+			match = ','.join(match)
+			print(match)
 
 def main():
 	patterns = readIn(',')
@@ -77,8 +71,8 @@ def main():
 				#Check that each value in the pattern matches for path
 				patternMatches = True;
 				for index in range(0, len(path)):
-					if not pattern[index] == '*':
-						if not path[index] == pattern[index]:
+					if pattern[index] != '*':
+						if path[index] != pattern[index]:
 							patternMatches = False;
 				if patternMatches:
 					matchesList.append(pattern)
