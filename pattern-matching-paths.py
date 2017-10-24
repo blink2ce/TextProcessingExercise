@@ -21,7 +21,9 @@ def readIn(delimiter):
 
 def breakTies(matchesList):
 	matchLength = len(matchesList[0])
+	#Start at the end of the match and work backwards
 	index = -1;
+	#Stop after we look at all of the items in the match
 	while -(index) <  matchLength:
 		wildcardExists = False;
 		for match in matchesList:
@@ -34,7 +36,7 @@ def breakTies(matchesList):
 		index = index - 1;
 
 def findBestMatch(matchesList):
-	#first remove matches that have more wildcards than any other.
+	#Make list that records the number of wildcards in each match.
 	countWildcards = []
 	for pattern in matchesList:
 		count = 0
@@ -44,13 +46,12 @@ def findBestMatch(matchesList):
 		countWildcards.append(count)
 	mostWildcards = max(countWildcards)
 	minWildcards = min(countWildcards)
+	#Delete the matches that have more wildcards than any other.
 	while len(matchesList) > 1  and mostWildcards != minWildcards:
-	 	#delete the item where mostWildcards is found and delete 
-	 	#the corresponding count in countWildcards.
 	 	index = countWildcards.index(mostWildcards)
 	 	del countWildcards[index]
 	 	del matchesList[index]
-	 	#Recalculate mostWildcards and minWildcards.
+	 	#recalculate max and min
 	 	mostWildcards = max(countWildcards)
 	 	minWildcards = min(countWildcards)
 	if len(matchesList) > 1:
