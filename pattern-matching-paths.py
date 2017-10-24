@@ -1,5 +1,6 @@
 from __future__ import print_function
 import sys
+import collections
 
 inputFile = open(sys.argv[1])
 outputFile = sys.argv[2]
@@ -17,6 +18,20 @@ def readIn(delimiter):
 		item = item.split(delimiter)
 		paths.append(item)
 	return paths
+
+def breakTies(matchesList):
+	matchLength = len(matchesList[0])
+	index = -1;
+	while -(index) <  matchLength:
+		wildcardExists = False;
+		for match in matchesList:
+			if match[index] == "*":
+				wildcardExists = True;
+		if wildcardExists:
+			for match in matchesList:
+				if match[index] != '*':
+					del matchesList[matchesList.index(match)]
+		index = index - 1;
 
 def findBestMatch(matchesList):
 	#first remove matches that have more wildcards than any other.
@@ -38,7 +53,8 @@ def findBestMatch(matchesList):
 	 	#Recalculate mostWildcards and minWildcards.
 	 	mostWildcards = max(countWildcards)
 	 	minWildcards = min(countWildcards)
-
+	if len(matchesList) > 1:
+		breakTies(matchesList)
 
 def main():
 	patterns = readIn(',')
