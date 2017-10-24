@@ -4,24 +4,17 @@ import sys
 inputFile = open(sys.argv[1])
 outputFile = sys.argv[2]
 
-def readPatterns():
-	numPatterns = int(inputFile.readline())
-	patterns = []
-	for n in range(0, numPatterns):
-		patterns.append(inputFile.readline().strip().split(','))
-	return patterns
-
-def readPaths():
+def readIn(delimiter):
 	numPaths = int(inputFile.readline())
 	paths = []
 	for n in range(0, numPaths):
 		item = inputFile.readline().strip()
 		#remove slashes from both ends, if they exist
-		if not item[0].isalnum():
+		if item[0] == '/':
 			item = item[1:]
-		if not item[len(item) - 1].isalnum():
+		if item[len(item) - 1] == '/':
 			item = item[:len(item) - 1]
-		item = item.split('/')
+		item = item.split(delimiter)
 		paths.append(item)
 	return paths
 
@@ -48,8 +41,8 @@ def findBestMatch(matchesList):
 
 
 def main():
-	patterns = readPatterns()
-	paths = readPaths()
+	patterns = readIn(',')
+	paths = readIn('/')
 	with open(outputFile, 'w') as f:
 		for path in paths:
 			matchesList = []
@@ -66,7 +59,6 @@ def main():
 				findBestMatch(matchesList)
 			if len(matchesList) == 0:
 				matchesList.append(["NO MATCH"])
-			#print matchesList
 			for item in matchesList:
 				item = ','.join(item)
 				f.write(item + '\n')
