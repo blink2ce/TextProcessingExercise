@@ -57,29 +57,38 @@ def findBestMatch(matchesList):
 	if len(matchesList) > 1:
 		breakTies(matchesList)
 
+def printResult(result):
+	with open(outputFile, 'w') as f:
+		for matchesList in result:
+			for match in matchesList:
+				match = ','.join(match)
+				f.write(match + '\n')
+				print(match)
+
 def main():
 	patterns = readIn(',')
 	paths = readIn('/')
-	with open(outputFile, 'w') as f:
-		for path in paths:
-			matchesList = []
-			for pattern in patterns:
-				if len(pattern) == len(path):
-					patternMatches = True;
-					for index in range(0, len(path)):
-						if not pattern[index] == '*':
-							if not path[index] == pattern[index]:
-								patternMatches = False;
-					if patternMatches:
-						matchesList.append(pattern)
-			if len(matchesList) > 1:
-				findBestMatch(matchesList)
-			if len(matchesList) == 0:
-				matchesList.append(["NO MATCH"])
-			for item in matchesList:
-				item = ','.join(item)
-				f.write(item + '\n')
-				print(item)
+	result = []
+	#Find patterns that match each path
+	for path in paths:
+		matchesList = []
+		for pattern in patterns:
+			if len(pattern) == len(path):
+				#Check that each value in the pattern matches for path
+				patternMatches = True;
+				for index in range(0, len(path)):
+					if not pattern[index] == '*':
+						if not path[index] == pattern[index]:
+							patternMatches = False;
+				if patternMatches:
+					matchesList.append(pattern)
+		if len(matchesList) > 1:
+			findBestMatch(matchesList)
+		if len(matchesList) == 0:
+			matchesList.append(["NO MATCH"])
+		result.append(matchesList)
+	printResult(result)	
+
 
 main()
 
