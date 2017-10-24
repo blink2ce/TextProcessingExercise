@@ -1,6 +1,12 @@
+from __future__ import print_function
+import sys
+
+print(sys.argv)
+
 #Open file
-tf = 'input-file.txt'
+tf = sys.argv[1]
 f = open(tf)
+outputFile = sys.argv[2]
 
 #Read patterns into the program
 numPatterns = int(f.readline())
@@ -42,25 +48,27 @@ def findBestMatch(matchesList):
 	 	mostWildcards = max(countWildcards)
 	 	minWildcards = min(countWildcards)
 
-for path in paths:
-	matchesList = []
-	for pattern in patterns:
-		if len(pattern) == len(path):
-			patternMatches = True;
-			for index in range(0, len(path)):
-				if not pattern[index] == '*':
-					if not path[index] == pattern[index]:
-						patternMatches = False;
-			if patternMatches:
-				matchesList.append(pattern)
-	if len(matchesList) > 1:
-		findBestMatch(matchesList)
-	if len(matchesList) == 0:
-		matchesList.append(["NO MATCH"])
-	#print matchesList
-	for item in matchesList:
-		item = ','.join(item)
-		print item
+with open(outputFile, 'w') as f:
+	for path in paths:
+		matchesList = []
+		for pattern in patterns:
+			if len(pattern) == len(path):
+				patternMatches = True;
+				for index in range(0, len(path)):
+					if not pattern[index] == '*':
+						if not path[index] == pattern[index]:
+							patternMatches = False;
+				if patternMatches:
+					matchesList.append(pattern)
+		if len(matchesList) > 1:
+			findBestMatch(matchesList)
+		if len(matchesList) == 0:
+			matchesList.append(["NO MATCH"])
+		#print matchesList
+		for item in matchesList:
+			item = ','.join(item)
+			f.write(item + '\n')
+			print(item)
 
 
 
